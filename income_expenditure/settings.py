@@ -25,7 +25,7 @@ SECRET_KEY = 'e#5ggn7948c=s59-fo1e9qs8orin2v1x5awn3&f7+-u(xr^%pv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -39,6 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'smart_selects',
+    'import_export',
+    'rangefilter',
+    'simple_history',
+    'django_cleanup',
+
+
 ]
 
 MIDDLEWARE = [
@@ -49,14 +55,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
 
+    #THIRDPARTY
+    'simple_history.middleware.HistoryRequestMiddleware',
+]
+SIMPLE_HISTORY_REVERT_DISABLED=True
 ROOT_URLCONF = 'income_expenditure.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,3 +129,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS=[BASE_DIR/'static']
+STATIC_ROOT = BASE_DIR/'static-root'
+MEDIA_URL='/media/'
+
+MEDIA_ROOT=BASE_DIR/'media'
