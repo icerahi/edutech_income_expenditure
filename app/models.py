@@ -12,7 +12,7 @@ from smart_selects.db_fields import ChainedForeignKey
 
 
 class Type(models.Model):
-    name = models.CharField(max_length=15)
+    name = models.CharField(verbose_name='Type',max_length=15)
 
     def __str__(self):
         return self.name
@@ -26,7 +26,7 @@ class Type(models.Model):
 
 class Source(models.Model):
     type = models.ForeignKey(Type,on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
+    name = models.CharField(verbose_name='Source',max_length=50)
 
     def __str__(self):
         return self.name
@@ -37,7 +37,7 @@ class Field(models.Model):
     type   = models.ForeignKey(Type,on_delete=models.CASCADE)
     source = ChainedForeignKey(Source, chained_field='type', chained_model_field='type',
                                show_all=False, auto_choose=True, sort=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(verbose_name='Field',max_length=50)
 
     def __str__(self):
         return self.name
