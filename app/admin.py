@@ -30,7 +30,7 @@ class InExAdmin(ImportExportModelAdmin,SimpleHistoryAdmin):
     readonly_fields = ['image_tag']
 
     list_filter = (
-        ('date', DateRangeFilter),('type'),('created_by__username'),('field'),
+        ('date', DateRangeFilter),('type__name'),('created_by__username'),('source__name'),
     )
 
     def save_model(self, request, obj, form, change):
