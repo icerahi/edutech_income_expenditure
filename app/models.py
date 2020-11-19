@@ -22,10 +22,21 @@ class Type(models.Model):
         return super(Type, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name_plural = '  Types'
+        verbose_name_plural = '   Types'
+
+class Source(models.Model):
+    type = models.ForeignKey(Type,on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name_plural = '  Source'
 
 class Field(models.Model):
-    type = models.ForeignKey(Type,on_delete=models.DO_NOTHING)
+    type   = models.ForeignKey(Type,on_delete=models.CASCADE)
+    source = ChainedForeignKey(Source, chained_field='type', chained_model_field='type',
+                               show_all=False, auto_choose=True, sort=True)
     name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -59,7 +70,9 @@ class TotalManager(models.Manager):
 class InEx(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.SET_NULL,null=True,blank=True)
     type = models.ForeignKey(Type,on_delete=models.SET_NULL,null=True,blank=True)
-    field = ChainedForeignKey(Field,chained_field='type',chained_model_field='type',
+    source = ChainedForeignKey(Source,chained_field='type',chained_model_field='type',
+                               show_all=False,auto_choose=True,sort=True)
+    field = ChainedForeignKey(Field,chained_field='source',chained_model_field='source',
                                show_all=False,auto_choose=True,sort=True)
     note  = models.TextField()
     amount = models.FloatField()

@@ -8,23 +8,25 @@ from import_export.fields import Field
 from rangefilter.filter import DateRangeFilter, DateTimeRangeFilter
 from simple_history.admin import SimpleHistoryAdmin
 
-from app.models import InEx, Type, Field
+from app.models import InEx, Type, Field, Source
+
 
 class InExResource(resources.ModelResource):
     class Meta:
         model = InEx
-        fields =('type__name','field','note','amount','date')
+        fields =('source','field','type','note','amount','date')
 
 
 @admin.register(InEx)
 class InExAdmin(ImportExportModelAdmin,SimpleHistoryAdmin):
     #change_list_template = 'admin/import_export/change_list.html'
     history_list_display = ["amount"]
-    list_display = ('type','field','note','amount','date','image_tag',)
-    search_fields = ('note','date','amount')
+    list_display = ('source','field','type','note','amount','date','image_tag',)
+    list_display_links = ('source','field','type','note','amount','date',)
+    search_fields = ('note',)
     date_hierarchy = 'date'
     resource_class = InExResource
-    fields = ('type','field','note','amount','image',)
+    fields = ('type','source','field','note','amount','image',)
     readonly_fields = ['image_tag']
 
     list_filter = (
@@ -49,10 +51,15 @@ class InExAdmin(ImportExportModelAdmin,SimpleHistoryAdmin):
 class TypeAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
-@admin.register(Field)
+@admin.register(Source)
 class SourceAdmin(admin.ModelAdmin):
     list_filter = ('type',)
-    list_display = ('name','type')
+    list_display = ('name','type')\
+
+@admin.register(Field)
+class FieldAdmin(admin.ModelAdmin):
+    list_filter = ('source',)
+    list_display = ('name','source')
 
 
 
