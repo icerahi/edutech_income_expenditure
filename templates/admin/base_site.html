@@ -1,0 +1,59 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block extrastyle %}
+<style>
+    #header a:link, #header a:visited {
+    color: #090808;
+}
+#header {
+    background: #d9d9d9;
+    color: #222221;
+    border: 1px solid #dee2e6;
+}
+.module h2, .module caption, .inline-group h2{
+   background: #0f0e0ef2;
+}
+
+a:link, a:visited {
+    color: #0e0f0f;
+    text-decoration: none;
+}
+div.breadcrumbs {
+   background: #0f0e0ef2;
+    color: #fff;
+
+}
+.object-tools a:link, .object-tools a:visited {
+
+    background: #bb3a3a;
+
+}
+.button.default, input[type="submit"].default, .submit-row input.default {
+
+    background: #1c8e29;
+}
+.button.default, input[type="submit"].default, .submit-row input.default {
+
+    background: #1c8e29;
+}
+.button, input[type="submit"], input[type="button"], .submit-row input, a.button:hover{
+    background: #1c8e29;
+}
+
+</style>
+{% endblock %}
+
+
+{% block branding %}
+<h1 id="site-name">
+<a href="{% url 'admin:index' %}">
+    <img src="{% static 'ets_logo.gif' %}" height="40px" />
+</a>
+ </h1>
+ {% endblock %}
+
+ {% block nav-global %}{% endblock %}
